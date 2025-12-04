@@ -42,10 +42,126 @@ def home(request: Request, db: Session = Depends(get_db)):
     })
 
 
+<<<<<<< HEAD
+=======
+# FORMs
+@app.get("/form-jugador")
+def form_jugador(request: Request):
+    return templates.TemplateResponse("form_jugador.html", {
+        "request": request,
+        "posiciones": list(Position),
+        "estados": list(States)
+    })
+
+@app.get("/form-partido")
+def form_partido(request: Request):
+    return templates.TemplateResponse("form_partido.html", {"request": request})
+    
+
+@app.get("/form-asignar-goles/{jugador_id}")
+def form_asignar_goles(request: Request, jugador_id: int):
+    return templates.TemplateResponse("form_asignar_goles.html", {
+        "request": request,
+        "jugador_id": jugador_id
+    })
+
+>>>>>>> f2763e8ec629a15cfe32022a5007761afa3ce303
 
 
 
+<<<<<<< HEAD
 # jSON
+=======
+        nombre=nombre,
+        nacionalidad=nacionalidad,
+        edad=edad,
+
+
+        peso=peso,
+        altura=altura,
+        pie=pie,
+        posicion=posicion,
+        valormer=valormer,
+        estado=estado,
+        goles=goles,
+        asistencias=asistencias
+    )
+
+    db.add(jugador)
+    db.commit()
+
+    return RedirectResponse("/jugadores", status_code=303)
+
+
+#  CREAR PARTIDO --------
+@app.post("/crear-partido")
+def crear_partido(
+    local: str = Form(...),
+    visitante: str = Form(...),
+    goles_local: int = Form(...),
+    goles_visitante: int = Form(...),
+    fecha: str = Form(...),
+    db: Session = Depends(get_db)
+):
+    partido = PartidoDB(
+        local=local,
+        visitante=visitante,
+        goles_local=goles_local,
+        goles_visitante=goles_visitante,
+        fecha=fecha
+    )
+
+    db.add(partido)
+    db.commit()
+
+    return RedirectResponse("/partidos", status_code=303)
+
+
+#  LISTAR -
+@app.get("/jugadores")
+def ver_jugadores(request: Request, db: Session = Depends(get_db)):
+    jugadores = db.query(JugadorDB).all()
+    return templates.TemplateResponse("jugadores.html", {
+        "request": request,
+        "jugadores": jugadores
+    })
+
+
+@app.get("/partidos")
+def ver_partidos(request: Request, db: Session = Depends(get_db)):
+    partidos = db.query(PartidoDB).all()
+    return templates.TemplateResponse("partidos.html", {
+        "request": request,
+        "partidos": partidos
+    })
+
+
+@app.put("/asignar-goles/{jugador_id}")
+def asignar_goles(jugador_id: int, goles: int, db: Session = Depends(get_db)):
+    jugador = db.query(JugadorDB).filter(JugadorDB.id == jugador_id).first()
+    if not jugador:
+        raise HTTPException(status_code=404, detail="Jugador no encontrado")
+    
+    # Asignamos los goles al jugador
+    jugador.goles += goles
+    db.commit()
+    db.refresh(jugador)
+
+    return {"message": f"Goles asignados correctamente. El jugador {jugador.nombre} ahora tiene {jugador.goles} goles."}
+
+
+#ELIMINAR
+@app.get("/eliminar-jugador/{jugador_id}")
+def eliminar_jugador(jugador_id: int, db: Session = Depends(get_db)):
+    jugador = db.query(JugadorDB).filter(JugadorDB.id == jugador_id).first()
+    if jugador:
+        db.delete(jugador)
+        db.commit()
+    return RedirectResponse("/jugadores", status_code=303)
+
+
+# API JSON
+>>>>>>> f2763e8ec629a15cfe32022a5007761afa3ce303
 @app.get("/api/jugadores")
 def api_jugadores(db: Session = Depends(get_db)):
     return db.query(JugadorDB).all()
