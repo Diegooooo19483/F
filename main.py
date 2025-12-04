@@ -16,7 +16,6 @@ templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
-# -------- DEPENDENCIA DB --------
 def get_db():
     db = SessionLocal()
     try:
@@ -25,7 +24,7 @@ def get_db():
         db.close()
 
 
-# -------- HOME --------
+#HOME
 @app.get("/")
 def home(request: Request, db: Session = Depends(get_db)):
     jugadores = db.query(JugadorDB).count()
@@ -43,7 +42,7 @@ def home(request: Request, db: Session = Depends(get_db)):
     })
 
 
-# -------- FORMULARIOS --------
+# FORMs
 @app.get("/form-jugador")
 def form_jugador(request: Request):
     return templates.TemplateResponse("form_jugador.html", {
@@ -65,16 +64,26 @@ def crear_jugador(
     edad: int = Form(...),
     posicion: str = Form(...),
     estado: str = Form(...),
-    ncamiseta: int = Form(0),
+    altura: float = Form(...),
     goles: int = Form(0),
+    peso: int = Form(0),
+    pie: str = Form(...),
+    valormer: int = Form(0),
     asistencias: int = Form(0),
     db: Session = Depends(get_db)
 ):
     jugador = JugadorDB(
+
         nombre=nombre,
         nacionalidad=nacionalidad,
         edad=edad,
+
+
+        peso=peso,
+        altura=altura,
+        pie=pie,
         posicion=posicion,
+        valormer=valormer,
         estado=estado,
         goles=goles,
         asistencias=asistencias
