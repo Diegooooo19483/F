@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from database import Base
+from datetime import date
 
 
 class JugadorDB(Base):
@@ -8,10 +9,16 @@ class JugadorDB(Base):
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String)
     nacionalidad = Column(String)
-    Ncamiseta = Column(Integer)
     edad = Column(Integer)
+    Ncamiseta = Column(Integer)
+
+    altura = Column(Integer)
+    peso = Column(Integer)
+    pie = Column(String)
     posicion = Column(String)
+    valormer = Column(Integer)
     estado = Column(String)
+
 
     goles = Column(Integer, default=0)
     asistencias = Column(Integer, default=0)

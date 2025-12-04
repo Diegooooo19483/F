@@ -7,6 +7,11 @@
 {% for j in jugadores %}
 <div class="card">
     <strong>{{ j.nombre }}</strong> ({{ j.edad }} años)<br>
+    Nacionalidad: {{ j.nacionalidad }}<br>
+    Número de camiseta: {{ j.Ncamiseta }}<br>
+
+    <label> Datos deportivos</label>
+    Altura: {{ j.altura }}<br>
     Posición: {{ j.posicion }}<br>
     Estado: {{ j.estado }}<br>
     Goles: {{ j.goles }} | Asistencias: {{ j.asistencias }}<br><br>
