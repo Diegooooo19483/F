@@ -95,7 +95,7 @@ def crear_jugador(
     return RedirectResponse("/jugadores", status_code=303)
 
 
-# -------- CREAR PARTIDO --------
+#  CREAR PARTIDO --------
 @app.post("/crear-partido")
 def crear_partido(
     local: str = Form(...),
@@ -119,7 +119,7 @@ def crear_partido(
     return RedirectResponse("/partidos", status_code=303)
 
 
-# -------- LISTAR --------
+#  LISTAR -
 @app.get("/jugadores")
 def ver_jugadores(request: Request, db: Session = Depends(get_db)):
     jugadores = db.query(JugadorDB).all()
@@ -138,7 +138,7 @@ def ver_partidos(request: Request, db: Session = Depends(get_db)):
     })
 
 
-# -------- ELIMINAR --------
+#ELIMINAR
 @app.get("/eliminar-jugador/{jugador_id}")
 def eliminar_jugador(jugador_id: int, db: Session = Depends(get_db)):
     jugador = db.query(JugadorDB).filter(JugadorDB.id == jugador_id).first()
@@ -148,7 +148,7 @@ def eliminar_jugador(jugador_id: int, db: Session = Depends(get_db)):
     return RedirectResponse("/jugadores", status_code=303)
 
 
-# -------- API JSON --------
+# API JSON
 @app.get("/api/jugadores")
 def api_jugadores(db: Session = Depends(get_db)):
     return db.query(JugadorDB).all()

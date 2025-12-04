@@ -10,7 +10,7 @@ class JugadorDB(Base):
     nombre = Column(String)
     nacionalidad = Column(String)
     edad = Column(Integer)
-    Ncamiseta = Column(Integer)
+    ncamiseta = Column(Integer)
 
     altura = Column(Integer)
     peso = Column(Integer)
@@ -18,6 +18,7 @@ class JugadorDB(Base):
     posicion = Column(String)
     valormer = Column(Integer)
     estado = Column(String)
+    ingreso = Column(Integer)
 
 
     goles = Column(Integer, default=0)
